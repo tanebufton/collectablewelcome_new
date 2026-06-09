@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#171522">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<link rel="shortcut icon" type="image/png" href="/favicon.png">
+<title>Welcome — Collectable.gg</title>
+<meta name="description" content="Welcome to Collectable.gg — get started with your membership.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://welcome.collectable.gg/">
+<meta property="og:title" content="Welcome — Collectable.gg">
+<meta property="og:description" content="Welcome to Collectable.gg — get started with your membership.">
+<meta property="og:image" content="https://collectable.gg/images/metadata-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Welcome — Collectable.gg">
+<meta name="twitter:description" content="Welcome to Collectable.gg — get started with your membership.">
+<meta name="twitter:image" content="https://collectable.gg/images/metadata-image.png">
+<link rel="preload" href="phone-model.glb" as="fetch" crossorigin>
+<link rel="preload" href="app-screen-mobile.webp" as="image" type="image/webp" media="(max-width: 899px)">
+<link rel="preload" href="app-screen.webp" as="image" type="image/webp" media="(min-width: 900px)">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand.css?v=2">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { color-scheme: dark; --step: 6px; --corner: 12px; }
+body { background: #171522; color: #f4f0ff; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+#section-hero { overflow-x: clip; }
+
+/* ── Fixed canvas layers ── */
+#hero-grid-canvas { position: fixed; inset: 0; width: 100vw !important; height: 100vh !important; pointer-events: none; z-index: 0; }
+
+/* ── Nav ── */
+nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; background: none; pointer-events: none; }
+nav > * { pointer-events: auto; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo img { height: 48px; width: 48px; display: block; border-radius: 12px; background-color: #FF1139; box-shadow: 0 8px 32px rgba(0,0,0,0.20); }
+.nav-ctas { display: flex; align-items: center; background: rgba(23,21,34,0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 8px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.20); }
+.nav-link { font-family: 'Roboto', sans-serif; font-size: 0.85rem; color: #f4f0ff; text-decoration: none; transition: color 0.15s; }
+.nav-link:hover { color: #ffffff; }
+
+/* ── Pixel shape ── */
+.pixel-shape { clip-path: polygon(0 var(--corner), var(--step) var(--corner), var(--step) var(--step), var(--corner) var(--step), var(--corner) 0, calc(100% - var(--corner)) 0, calc(100% - var(--corner)) var(--step), calc(100% - var(--step)) var(--step), calc(100% - var(--step)) var(--corner), 100% var(--corner), 100% calc(100% - var(--corner)), calc(100% - var(--step)) calc(100% - var(--corner)), calc(100% - var(--step)) calc(100% - var(--step)), calc(100% - var(--corner)) calc(100% - var(--step)), calc(100% - var(--corner)) 100%, var(--corner) 100%, var(--corner) calc(100% - var(--step)), var(--step) calc(100% - var(--step)), var(--step) calc(100% - var(--corner)), 0 calc(100% - var(--corner))); }
+
+/* ── Buttons ── */
+.btn-discord {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #5865F2; color: #fff;
+  padding: 14px 30px;
+  font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: filter 0.15s, transform 0.15s;
+}
+.btn-discord:hover { filter: brightness(1.15) drop-shadow(0 0 12px rgba(88,101,242,0.55)); transform: translateY(-2px); }
+.btn-discord:active { transform: translateY(0); filter: brightness(0.9); }
+
+.btn-guides {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #FF1139; color: #fff;
+  padding: 14px 30px;
+  font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: filter 0.15s, transform 0.15s;
+}
+.btn-guides:hover { filter: brightness(1.15) drop-shadow(0 0 12px rgba(255,17,57,0.6)); transform: translateY(-2px); }
+.btn-guides:active { transform: translateY(0); filter: brightness(0.9); }
+
+@media (hover: none) {
+  .btn-discord:hover, .btn-guides:hover { filter: none; transform: none; }
+}
+
+/* ══ HERO ══════════════════════════════════════════ */
+.hero-wrap { position: relative; height: 100vh; overflow: hidden; z-index: 4; }
+@media (max-width: 900px) { .hero-wrap { height: auto; overflow: visible; } }
+.hero { position: relative; z-index: 2; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; align-content: center; max-width: 1200px; margin: 0 auto; padding: 90px 48px 60px; column-gap: 20px; row-gap: 0; }
+.hero-content-top, .hero-content-bottom { display: flex; flex-direction: column; align-items: flex-start; position: relative; z-index: 2; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; color: #ff6680; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 10px; }
+.badge-dot { width: 6px; height: 6px; background: #FF1139; border-radius: 50%; animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+#section-hero h1 { font-family: 'Poppins', sans-serif; font-size: clamp(4.2rem, 4.5vw, 5rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+#section-hero h1 .accent { color: #FF1139; }
+.hero-sub { color: #868392; font-size: 0.9rem; line-height: 1.75; max-width: 460px; margin-bottom: 20px; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.hero-model { grid-column: 2; grid-row: 1 / span 2; align-self: center; position: relative; min-height: 520px; }
+.model-glow { position: absolute; top: 50%; right: 12%; transform: translateY(-50%); width: 420px; height: 420px; background: radial-gradient(circle, rgba(255,17,57,0.16) 0%, rgba(255,17,57,0.04) 50%, transparent 70%); pointer-events: none; border-radius: 50%; filter: blur(20px); z-index: 0; }
+#iphone-canvas { display: block; position: absolute; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 0.5s ease; }
+.alerts-layer { position: absolute; pointer-events: none; z-index: 10; opacity: 0; transition: opacity 0.4s ease; }
+.alerts-layer.chips-visible { opacity: 1; }
+
+/* ── Alert chips ── */
+.alert-chip { position: absolute; width: 300px; height: 70px; pointer-events: none; user-select: none; transform: translate(var(--px-x,0px), var(--px-y,0px)) scale(calc(var(--chip-scale,1) * var(--layer-scale,1))) translateZ(0); will-change: transform; }
+.alert-chip[data-expand="right"] { transform-origin: top left; }
+.alert-chip[data-expand="left"]  { transform-origin: top right; }
+.alert-glass { position: relative; height: 70px; width: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.18); border-radius: 18px; backdrop-filter: blur(8px) saturate(140%); -webkit-backdrop-filter: blur(8px) saturate(140%); box-shadow: 0 6px 6px rgba(0,0,0,0.15), 0 0 18px rgba(0,0,0,0.08), 0 0 36px rgba(255,255,255,0.06); will-change: backdrop-filter; pointer-events: auto; cursor: pointer; }
+.alert-chip[data-expand="left"] .alert-glass { margin-left: auto; }
+.alerts-layer.chips-visible .alert-glass { width: 70px; }
+.alerts-layer.chips-animated .alert-chip  { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }
+.alerts-layer.chips-animated .alert-glass { transition: width 0.38s cubic-bezier(0.22,1,0.36,1); }
+.alerts-layer .alert-chip[data-expand="right"]:has(.alert-glass:hover), .alerts-layer .alert-chip[data-expand="right"].active { --chip-scale: 1 !important; }
+.alerts-layer .alert-chip[data-expand="left"]:has(.alert-glass:hover),  .alerts-layer .alert-chip[data-expand="left"].active  { --chip-scale: 1 !important; }
+.alerts-layer .alert-glass:hover, .alerts-layer .alert-chip.active .alert-glass { width: 300px; }
+.alert-inner { width: 300px; height: 70px; display: flex; align-items: center; gap: 12px; padding: 9px 8px; background: rgba(255,255,255,0.08); pointer-events: none; }
+.alert-chip[data-expand="left"] .alert-inner { flex-direction: row-reverse; position: absolute; right: 0; }
+.alert-thumb { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.alert-thumb-placeholder { width: 100%; height: 100%; background-size: cover; background-position: center; }
+.alert-content { flex: 1; min-width: 0; opacity: 0; display: flex; flex-direction: column; justify-content: center; gap: 2px; transition: opacity 0.14s ease 0.22s; -webkit-font-smoothing: antialiased; transform: translateZ(0); text-align: left; }
+.alert-glass:hover .alert-content, .alert-chip.active .alert-content { opacity: 1; }
+.alert-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; }
+.alert-source { font-family: 'Poppins', sans-serif; font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+.alert-time { font-size: 0.6rem; font-weight: 500; color: rgba(255,255,255,0.35); white-space: nowrap; flex-shrink: 0; }
+.alert-product-name { font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.95); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+.alert-row-bottom { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.alert-product-price { font-family: 'Poppins', sans-serif; font-size: 0.76rem; font-weight: 700; color: #fff; white-space: nowrap; }
+.alert-status { background: rgba(255,17,57,0.15); color: #FF1139; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.07em; padding: 2px 7px; border-radius: 100px; border: 1px solid rgba(255,17,57,0.32); white-space: nowrap; flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px; }
+.alert-status::before { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: #FF1139; flex-shrink: 0; }
+
+/* ── Responsive ── */
+@media (min-width: 900px) and (max-width: 1279px) { #section-hero h1 { font-size: clamp(4.2rem, 5.5vw, 5rem); } }
+@media (min-width: 900px) {
+  .hero { padding-top: clamp(80px, 10vh, 140px); }
+  .hero-content-top { align-self: end; padding-bottom: 20px; }
+  .hero-content-bottom { align-self: start; }
+}
+@media (max-width: 900px) {
+  nav { top: 10px; padding: 0 20px; }
+  .nav-logo img { height: 42px; width: 42px; }
+  .hero { grid-template-columns: 1fr; grid-template-rows: auto auto auto; align-content: start; text-align: center; padding: 80px 24px 100px; column-gap: 0; }
+  .hero-content-top { order: 1; align-items: center; z-index: 1; margin-top: 24px; }
+  #section-hero h1 { font-size: clamp(3.4rem, 14vw, 5rem); line-height: 1.02; }
+  .hero-content-bottom { order: 3; align-items: center; z-index: 1; }
+  .hero-sub { text-align: center; }
+  .hero-actions { justify-content: center; }
+  .hero-model { order: 2; grid-column: auto; grid-row: auto; height: clamp(260px, 55vw, 380px); margin-top: -100px; margin-bottom: -20px; margin-left: -24px; width: calc(100% + 48px); overflow: visible; position: relative; z-index: 3; pointer-events: none; }
+  .model-glow { width: 280px; height: 280px; right: 50%; transform: translate(50%, -50%); }
+  #iphone-canvas { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; }
+  .alert-chip { width: 240px; }
+  .alert-inner { width: 240px; }
+  .alerts-layer .alert-glass:hover, .alerts-layer .alert-chip.active .alert-glass { width: 240px; }
+  .alert-product-name { font-size: 0.74rem; }
+  .alert-source, .alert-time { font-size: 0.56rem; }
+  .alert-product-price { font-size: 0.7rem; }
+  .alert-status { font-size: 0.53rem; padding: 2px 5px; flex-shrink: 1; min-width: 0; overflow: hidden; }
+  .btn-discord, .btn-guides { justify-content: center; width: 100%; max-width: 280px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="hero-grid-canvas"></canvas>
+
+<nav>
+  <a href="https://collectable.gg" class="nav-logo">
+    <img src="images/logo.png" alt="Collectable.gg">
+  </a>
+  <a href="https://discord.gg/collectable" class="btn-pixel-primary pixel-shape btn-pixel-nav" style="background:#5865F2;" target="_blank" rel="noopener">Open Discord</a>
+</nav>
+
+<div id="section-hero">
+  <div class="hero-wrap">
+    <div class="model-glow"></div>
+    <canvas id="iphone-canvas"></canvas>
+    <div class="alerts-layer" id="alerts-layer">
+      <div class="alert-chip" id="alert-1" data-expand="right">
+        <div class="alert-glass"><div class="alert-inner">
+          <div class="alert-thumb"><div class="alert-thumb-placeholder" style="background-image:url('images/ascended-heroes-etb.png');background-size:cover;background-position:center;"></div></div>
+          <div class="alert-content">
+            <div class="alert-row-top"><span class="alert-source">#pokemon-alerts</span><span class="alert-time">Just now</span></div>
+            <span class="alert-product-name">Pok&eacute;mon Ascended Heroes ETB</span>
+            <div class="alert-row-bottom"><span class="alert-product-price">$89.99</span><span class="alert-status">Auckland</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="alert-chip" id="alert-2" data-expand="left">
+        <div class="alert-glass"><div class="alert-inner">
+          <div class="alert-thumb"><div class="alert-thumb-placeholder" style="background-image:url('images/labubu-have-a-seat.png');background-size:cover;background-position:center;"></div></div>
+          <div class="alert-content">
+            <div class="alert-row-top"><span class="alert-source">#popmart-alerts</span><span class="alert-time">2 min ago</span></div>
+            <span class="alert-product-name">Popmart The Monsters Have A Seat</span>
+            <div class="alert-row-bottom"><span class="alert-product-price">$24.99</span><span class="alert-status">Online Now</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="alert-chip" id="alert-3" data-expand="right">
+        <div class="alert-glass"><div class="alert-inner">
+          <div class="alert-thumb"><div class="alert-thumb-placeholder" style="background-image:url('images/riftbound-origins-booster.png');background-size:cover;background-position:center;"></div></div>
+          <div class="alert-content">
+            <div class="alert-row-top"><span class="alert-source">#lorcana-alerts</span><span class="alert-time">5 min ago</span></div>
+            <span class="alert-product-name">Riftbound Origins Booster Box</span>
+            <div class="alert-row-bottom"><span class="alert-product-price">$169.99</span><span class="alert-status">Christchurch</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="alert-chip" id="alert-4" data-expand="left">
+        <div class="alert-glass"><div class="alert-inner">
+          <div class="alert-thumb"><div class="alert-thumb-placeholder" style="background-image:url('images/one-piece-op13.png');background-size:cover;background-position:center;"></div></div>
+          <div class="alert-content">
+            <div class="alert-row-top"><span class="alert-source">#one-piece-alerts</span><span class="alert-time">12 min ago</span></div>
+            <span class="alert-product-name">One Piece OP-13 Booster Box</span>
+            <div class="alert-row-bottom"><span class="alert-product-price">$109.99</span><span class="alert-status">Tauranga</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="alert-chip" id="alert-5" data-expand="right">
+        <div class="alert-glass"><div class="alert-inner">
+          <div class="alert-thumb"><div class="alert-thumb-placeholder" style="background-image:url('images/hotwheels-sth.png');background-size:cover;background-position:center;"></div></div>
+          <div class="alert-content">
+            <div class="alert-row-top"><span class="alert-source">#hotwheels-alerts</span><span class="alert-time">2 min ago</span></div>
+            <span class="alert-product-name">Hot Wheels Super Treasure Hunt</span>
+            <div class="alert-row-bottom"><span class="alert-product-price">$24.99</span><span class="alert-status">Dunedin</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div><!-- /.alerts-layer -->
+    <section class="hero">
+      <div class="hero-content-top">
+        <div class="hero-badge"><div class="badge-dot"></div>You're In</div>
+        <h1>Thanks for <span class="accent">joining!</span></h1>
+      </div>
+      <div class="hero-model"></div>
+      <div class="hero-content-bottom">
+        <p class="hero-sub">Join the Discord server and read our guides to get set up.</p>
+        <div class="hero-actions">
+          <a href="https://guides.collectable.gg/" class="btn-guides pixel-shape" target="_blank" rel="noopener">Read Our Guides &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </div><!-- /.hero-wrap -->
+</div><!-- /#section-hero -->
+
+<script type="importmap">
+{
+    "imports": {
+        "three":         "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+}
+</script>
+<script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader }      from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader }     from 'three/addons/loaders/DRACOLoader.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    const S = {
+        model:     { scale: 0.20, positionXBias: -0.15, positionY: -0.03, restRotX: -0.52, restRotY: -0.49, restRotZ: -0.59, bboxInset: 0.12 },
+        camera:    { fov: 39, z: 1, exposure: 1.03, envIntensity: 1.01 },
+        animation: { floatSpeed: 1.34, floatAmplitude: 0.009, driftSpeed: 0.53, driftAmplitude: 0.018 },
+        mouse:     { sensitivityX: 0.18, sensitivityY: 0.08, lerpSpeed: 0.06 },
+        lights: {
+            hemi:    { skyColor: '#0061ff', groundColor: '#4d22b3', intensity: 5 },
+            key:     { color: '#ff1139', intensity: 11.9, pos: [-3.6, 5.9, -6.8] },
+            redFill: { color: '#ff1139', intensity: 7.6,  pos: [3.9, 0.3, -4.7] },
+            rim:     { color: '#ff1139', intensity: 5,    pos: [-1.6, -0.7, -0.2] },
+            rim2:    { color: '#ff1139', intensity: 5,    pos: [0.1, 1.4, -1] },
+            top:     { color: '#ff1139', intensity: 5 },
+            rim3:    { color: '#ff1139', intensity: 20,   pos: [0.7, 4.2, 0] },
+        },
+        screen: { meshName: 'BasePhone_Screen_0', emissive: 0.95 },
+        materials: {
+            Base:   { color: '#1c1c2c', metalness: 0.87, roughness: 0.36, envMapIntensity: 1.61, emissive: '#000000', emissiveIntensity: 0.96 },
+            Screen: { color: '#000000', metalness: 0.87, roughness: 0.4,  envMapIntensity: 0,    emissive: '#ffffff', emissiveIntensity: 0.95 },
+        },
+        screenTexture: 'app-screen.webp',
+        screenCornerRadius: 0.08,
+        medium: {
+            scale: 0.206, positionXBias: -0.05, positionY: -0.03,
+            restRotX: -0.35, restRotY: -0.62, restRotZ: -0.41, fov: 41, bboxInset: 0.12,
+            lights: { key: { intensity: 12.9 }, redFill: { intensity: 20 } },
+        },
+        mobile: {
+            scale: 0.209, positionXBias: 0, positionY: 0.01,
+            restRotX: -0.52, restRotY: -0.49, restRotZ: -0.73, fov: 42,
+            lights: { redFill: { intensity: 20, pos: [-0.4, 3.2, 0.3] } },
+        },
+        large: {
+            scale: 0.20, positionXBias: -0.15, positionY: -0.03,
+            restRotX: -0.52, restRotY: -0.49, restRotZ: -0.59, fov: 39, bboxInset: 0.12,
+        },
+        alerts: [
+            { id: 1, top: 71.5, posX: 70,   fromRight: false, expandDir: 'left',  visible: true,  scale: 1,    parallax: 1.5,  hideOnMobile: false },
+            { id: 2, top: 91,   posX: -7,   fromRight: false, expandDir: 'left',  visible: true,  scale: 0.67, parallax: 0.55, hideOnMobile: false },
+            { id: 3, top: 26,   posX: 106,  fromRight: false, expandDir: 'left',  visible: true,  scale: 0.8,  parallax: 1.55, hideOnMobile: true  },
+            { id: 4, top: 13.5, posX: 75,   fromRight: true,  expandDir: 'right', visible: true,  scale: 1,    parallax: 0.85, hideOnMobile: false },
+            { id: 5, top: 32,   posX: -222, fromRight: false, expandDir: 'left',  visible: true,  scale: 0.62, parallax: 0.45, hideOnMobile: true  },
+        ],
+    };
+
+    const alertChips = [];
+    (S.alerts || []).forEach(cfg => {
+        const el = document.getElementById(`alert-${cfg.id}`);
+        if (!el) return;
+        el.dataset.expand = cfg.expandDir;
+        el.style.top = el.style.bottom = el.style.left = el.style.right = '';
+        if (cfg.top <= 50) el.style.top    = cfg.top + '%';
+        else               el.style.bottom = (100 - cfg.top) + '%';
+        if (cfg.fromRight) el.style.right  = Math.abs(cfg.posX) + 'px';
+        else               el.style.left   = cfg.posX + 'px';
+        el.style.setProperty('--chip-scale', cfg.scale ?? 1);
+        alertChips.push({ el, cfg });
+    });
+
+    let viewMode = 'desktop';
+
+    function applyAlertVisibility() {
+        (S.alerts || []).forEach(cfg => {
+            const el = document.getElementById(`alert-${cfg.id}`);
+            if (!el) return;
+            const show = cfg.visible && (!cfg.hideOnMobile || viewMode !== 'mobile');
+            el.style.display = show ? '' : 'none';
+        });
+    }
+    applyAlertVisibility();
+
+    function _initThreeScene() {
+
+    function makeRoundedAlphaMask(radius) {
+        const W = 512, H = 1024;
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const ctx = c.getContext('2d');
+        const r = radius * Math.min(W, H);
+        ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.roundRect(0, 0, W, H, r); ctx.fill();
+        const tex = new THREE.CanvasTexture(c);
+        tex.generateMipmaps = false;
+        tex.minFilter = THREE.LinearFilter;
+        return tex;
+    }
+
+    const canvas      = document.getElementById('iphone-canvas');
+    const heroWrap    = document.querySelector('.hero-wrap');
+    const heroModel   = document.querySelector('.hero-model');
+    const alertsLayer = document.getElementById('alerts-layer');
+
+    let modelRef = null, fitScaleBase = 0;
+    const centreRef = new THREE.Vector3();
+    let _phoneCornersGroup = null;
+    const _refLayerW = 400;
+    const _refGlassLeft = new Map();
+
+    function getViewCfg() {
+        if (viewMode === 'mobile') return S.mobile;
+        if (viewMode === 'medium') return S.medium;
+        if (viewMode === 'large')  return S.large;
+        return S.model;
+    }
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setClearColor(0x171522, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = S.camera.exposure;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    const camera = new THREE.PerspectiveCamera(S.camera.fov, 1, 0.01, 200);
+    camera.position.set(0, 0, S.camera.z);
+
+    const scene = new THREE.Scene();
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environmentIntensity = S.camera.envIntensity;
+    pmrem.dispose();
+    renderer.setRenderTarget(null);
+    renderer.clear();
+
+    const hemi = new THREE.HemisphereLight(S.lights.hemi.skyColor, S.lights.hemi.groundColor, S.lights.hemi.intensity);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(S.lights.key.color, S.lights.key.intensity);
+    key.position.set(...S.lights.key.pos); scene.add(key);
+    const redFill = new THREE.PointLight(S.lights.redFill.color, S.lights.redFill.intensity, 14);
+    redFill.position.set(...S.lights.redFill.pos); scene.add(redFill);
+    const rim = new THREE.PointLight(S.lights.rim.color, S.lights.rim.intensity, 12);
+    rim.position.set(...S.lights.rim.pos); scene.add(rim);
+    const rim2 = new THREE.PointLight(S.lights.rim2.color, S.lights.rim2.intensity, 12);
+    rim2.position.set(...S.lights.rim2.pos); scene.add(rim2);
+    const top = new THREE.PointLight(S.lights.top.color, S.lights.top.intensity, 12);
+    top.position.set(0, 5, 1); scene.add(top);
+    const rim3 = new THREE.PointLight(S.lights.rim3.color, S.lights.rim3.intensity, 12);
+    rim3.position.set(...S.lights.rim3.pos); scene.add(rim3);
+
+    const phoneGroup = new THREE.Group();
+    phoneGroup.rotation.set(S.model.restRotX, S.model.restRotY, S.model.restRotZ);
+    scene.add(phoneGroup);
+
+    const draco = new DRACOLoader();
+    draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/libs/draco/');
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(draco);
+
+    loader.load('phone-model.glb', (gltf) => {
+        const model = gltf.scene;
+        model.rotation.y = Math.PI;
+        const box  = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        centreRef.copy(box.getCenter(new THREE.Vector3()));
+        fitScaleBase = 2.8 / Math.max(size.x, size.y, size.z);
+        modelRef = model;
+        applyModelTransform();
+        let screenMeshRef = null;
+        model.traverse(node => {
+            if (!node.isMesh || !node.material) return;
+            const m = node.material;
+            if (m.name === 'Base') {
+                ['map','normalMap','roughnessMap','metalnessMap','aoMap','emissiveMap'].forEach(k => {
+                    if (m[k]) { m[k].dispose(); m[k] = null; }
+                });
+            }
+            const cfg = S.materials[m.name];
+            if (cfg) {
+                m.color.set(cfg.color);
+                m.metalness = cfg.metalness; m.roughness = cfg.roughness;
+                m.envMapIntensity = cfg.envMapIntensity;
+                m.emissive.set(cfg.emissive); m.emissiveIntensity = cfg.emissiveIntensity;
+                m.needsUpdate = true;
+            }
+            if (node.name === S.screen.meshName) screenMeshRef = node;
+        });
+        const revealModel = () => {
+            requestAnimationFrame(() => {
+                canvas.style.opacity = '1';
+                alertsLayer.classList.add('chips-visible');
+                requestAnimationFrame(() => alertsLayer.classList.add('chips-animated'));
+            });
+        };
+        if (screenMeshRef && S.screenTexture) {
+            const textureSrc = window.innerWidth < 900 ? 'app-screen-mobile.webp' : S.screenTexture;
+            new THREE.TextureLoader().load(textureSrc, (tex) => {
+                tex.colorSpace = THREE.SRGBColorSpace;
+                tex.flipY = true;
+                tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+                tex.generateMipmaps = false;
+                tex.minFilter = tex.magFilter = THREE.LinearFilter;
+                tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                const m = screenMeshRef.material;
+                m.map = null; m.emissiveMap = tex;
+                m.alphaMap = makeRoundedAlphaMask(S.screenCornerRadius ?? 0.08);
+                m.transparent = true;
+                m.color.set('#000000'); m.emissive.set('#ffffff');
+                m.emissiveIntensity = S.screen.emissive ?? 0.95;
+                const scfg = S.materials.Screen;
+                m.metalness = scfg?.metalness ?? 0;
+                m.roughness = scfg?.roughness ?? 1;
+                m.envMapIntensity = scfg?.envMapIntensity ?? 0;
+                m.needsUpdate = true;
+                revealModel();
+            }, undefined, revealModel);
+        } else {
+            revealModel();
+        }
+        phoneGroup.add(model);
+        computePhoneCorners();
+        updateAlertLayer();
+    }, undefined, (err) => {
+        console.error('GLB load error:', err);
+        canvas.style.opacity = '1';
+    });
+
+    let targetRotX = S.model.restRotX, targetRotY = S.model.restRotY;
+    let alertX = 0, alertY = 0, alertTargetX = 0, alertTargetY = 0;
+    const ALERT_SENS_X = 16.8, ALERT_SENS_Y = 11.2, ALERT_LERP = 0.07;
+
+    document.querySelectorAll('.alert-chip').forEach(chip => {
+        chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wasActive = chip.classList.contains('active');
+            document.querySelectorAll('.alert-chip').forEach(c => c.classList.remove('active'));
+            if (!wasActive) chip.classList.add('active');
+        });
+    });
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.alert-chip').forEach(c => c.classList.remove('active'));
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        const mc = getViewCfg();
+        const nx = (e.clientX / window.innerWidth  - 0.5) * 2;
+        const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+        targetRotY = mc.restRotY + nx * S.mouse.sensitivityX;
+        targetRotX = mc.restRotX + ny * S.mouse.sensitivityY;
+        alertTargetX = nx * ALERT_SENS_X;
+        alertTargetY = ny * ALERT_SENS_Y;
+    });
+
+    heroModel.addEventListener('click', () => {
+        phoneGroup.scale.set(0.94, 0.94, 0.94);
+        setTimeout(() => phoneGroup.scale.set(1, 1, 1), 160);
+    });
+
+    heroModel.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const mc = getViewCfg();
+        const t = e.touches[0];
+        const rect = heroModel.getBoundingClientRect();
+        const nx = ((t.clientX - rect.left) / rect.width  - 0.5) * 2;
+        const ny = ((t.clientY - rect.top)  / rect.height - 0.5) * 2;
+        targetRotY = mc.restRotY + nx * S.mouse.sensitivityX;
+        targetRotX = mc.restRotX + ny * S.mouse.sensitivityY;
+        alertTargetX = nx * ALERT_SENS_X;
+        alertTargetY = ny * ALERT_SENS_Y;
+    }, { passive: false });
+
+    heroModel.addEventListener('touchend', () => {
+        const mc = getViewCfg();
+        targetRotX = mc.restRotX; targetRotY = mc.restRotY;
+        alertTargetX = 0; alertTargetY = 0;
+    });
+
+    function applyModelTransform() {
+        if (!modelRef || fitScaleBase <= 0) return;
+        const mc = getViewCfg();
+        const s  = fitScaleBase * mc.scale;
+        modelRef.scale.setScalar(s);
+        modelRef.position.set(-centreRef.x * s, -centreRef.y * s + mc.positionY, -centreRef.z * s);
+        if (modelRef.parent === phoneGroup) computePhoneCorners();
+    }
+
+    function computePhoneCorners() {
+        if (!modelRef) return;
+        phoneGroup.updateMatrixWorld(true);
+        const pgInv = phoneGroup.matrixWorld.clone().invert();
+        const box = new THREE.Box3();
+        const _tmp = new THREE.Matrix4();
+        phoneGroup.traverse(node => {
+            if (!node.isMesh || !node.geometry) return;
+            node.geometry.computeBoundingBox();
+            const b = node.geometry.boundingBox.clone();
+            b.applyMatrix4(_tmp.multiplyMatrices(pgInv, node.matrixWorld));
+            box.union(b);
+        });
+        const mn = box.min, mx = box.max;
+        _phoneCornersGroup = [
+            new THREE.Vector3(mn.x, mn.y, mn.z), new THREE.Vector3(mx.x, mn.y, mn.z),
+            new THREE.Vector3(mn.x, mx.y, mn.z), new THREE.Vector3(mx.x, mx.y, mn.z),
+            new THREE.Vector3(mn.x, mn.y, mx.z), new THREE.Vector3(mx.x, mn.y, mx.z),
+            new THREE.Vector3(mn.x, mx.y, mx.z), new THREE.Vector3(mx.x, mx.y, mx.z),
+        ];
+    }
+
+    const lightObjects = { key, redFill, rim, rim2, top, rim3 };
+    function applyLightsForBreakpoint() {
+        const mc = getViewCfg();
+        Object.entries(lightObjects).forEach(([k, light]) => {
+            if (S.lights[k]) {
+                light.intensity = S.lights[k].intensity;
+                if (S.lights[k].color) light.color.set(S.lights[k].color);
+                if (S.lights[k].pos)   light.position.set(...S.lights[k].pos);
+            }
+        });
+        if (mc.lights) {
+            Object.entries(mc.lights).forEach(([k, overrides]) => {
+                const light = lightObjects[k];
+                if (!light) return;
+                if (overrides.intensity !== undefined) light.intensity = overrides.intensity;
+                if (overrides.color     !== undefined) light.color.set(overrides.color);
+                if (overrides.pos       !== undefined) light.position.set(...overrides.pos);
+            });
+        }
+    }
+
+    function setSize() {
+        const vw = window.innerWidth;
+        viewMode = vw < 900 ? 'mobile' : vw < 1280 ? 'medium' : vw < 1600 ? 'desktop' : 'large';
+        const mc = getViewCfg();
+        const targetParent = viewMode === 'mobile' ? heroModel : heroWrap;
+        if (canvas.parentElement !== targetParent) {
+            targetParent.insertBefore(canvas, targetParent.firstChild);
+            targetParent.insertBefore(alertsLayer, canvas.nextSibling);
+        }
+        if (viewMode === 'mobile') {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const w = Math.max(rect.width, 1), h = Math.max(rect.height, 280);
+            renderer.setSize(w, h);
+            camera.fov = mc.fov; camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            phoneGroup.position.x = mc.positionXBias;
+        } else {
+            const w = vw, h = window.innerHeight;
+            renderer.setSize(w, h);
+            camera.fov = mc.fov ?? S.camera.fov; camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            const fovRad = camera.fov * Math.PI / 180;
+            const halfWidth = S.camera.z * Math.tan(fovRad / 2) * camera.aspect;
+            phoneGroup.position.x = halfWidth / 2 + mc.positionXBias;
+        }
+        targetRotX = mc.restRotX; targetRotY = mc.restRotY;
+        applyModelTransform();
+        applyLightsForBreakpoint();
+        updateAlertLayer();
+        applyAlertVisibility();
+    }
+    window.addEventListener('resize', setSize);
+    setSize();
+
+    const _v3 = new THREE.Vector3();
+    function updateAlertLayer() {
+        if (!_phoneCornersGroup || !alertsLayer) return;
+        const mc = getViewCfg();
+        const cw = canvas.clientWidth, ch = canvas.clientHeight;
+        const stableMtx = new THREE.Matrix4().compose(
+            new THREE.Vector3(phoneGroup.position.x, 0, phoneGroup.position.z),
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(mc.restRotX, mc.restRotY, mc.restRotZ, 'XYZ')),
+            new THREE.Vector3(1, 1, 1)
+        );
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        _phoneCornersGroup.forEach(c => {
+            _v3.copy(c).applyMatrix4(stableMtx).project(camera);
+            const px = ((_v3.x + 1) / 2) * cw;
+            const py = ((-_v3.y + 1) / 2) * ch;
+            if (px < minX) minX = px; if (py < minY) minY = py;
+            if (px > maxX) maxX = px; if (py > maxY) maxY = py;
+        });
+        if (mc.bboxInset) {
+            const iw = (maxX - minX) * mc.bboxInset, ih = (maxY - minY) * mc.bboxInset;
+            minX += iw; maxX -= iw; minY += ih; maxY -= ih;
+        }
+        const layerW = maxX - minX, layerH = maxY - minY;
+        alertsLayer.style.left = minX + 'px'; alertsLayer.style.top    = minY + 'px';
+        alertsLayer.style.width = layerW + 'px'; alertsLayer.style.height = layerH + 'px';
+        if (layerW > 0) {
+            alertsLayer.style.setProperty('--layer-scale', (layerW / _refLayerW).toFixed(3));
+            if (!_refGlassLeft.size) {
+                alertChips.forEach(({ el, cfg }) => {
+                    let glassLeft;
+                    if (cfg.fromRight)                glassLeft = _refLayerW - 300 - Math.abs(cfg.posX);
+                    else if (cfg.expandDir === 'left') glassLeft = cfg.posX + 230;
+                    else                              glassLeft = cfg.posX;
+                    _refGlassLeft.set(el, glassLeft);
+                });
+            }
+            alertChips.forEach(({ el, cfg }) => {
+                el.style.left = el.style.right = '';
+                const glassLeft = _refGlassLeft.get(el) * layerW / _refLayerW;
+                const chipLeft  = cfg.expandDir === 'left' ? glassLeft - 230 : glassLeft;
+                el.style.left   = (chipLeft / layerW * 100).toFixed(3) + '%';
+            });
+        }
+    }
+
+    const clock = new THREE.Clock();
+    let _rafId = null;
+    function animate() {
+        _rafId = requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        const mc = getViewCfg();
+        phoneGroup.position.y  = Math.sin(t * S.animation.floatSpeed)  * S.animation.floatAmplitude;
+        phoneGroup.rotation.z  = mc.restRotZ + Math.sin(t * S.animation.driftSpeed) * S.animation.driftAmplitude;
+        phoneGroup.rotation.x += (targetRotX - phoneGroup.rotation.x) * S.mouse.lerpSpeed;
+        phoneGroup.rotation.y += (targetRotY - phoneGroup.rotation.y) * S.mouse.lerpSpeed;
+        alertX += (alertTargetX - alertX) * ALERT_LERP;
+        alertY += (alertTargetY - alertY) * ALERT_LERP;
+        alertChips.forEach(({ el, cfg }) => {
+            const p = cfg.parallax ?? 1;
+            el.style.setProperty('--px-x', (alertX * p).toFixed(2) + 'px');
+            el.style.setProperty('--px-y', (alertY * p).toFixed(2) + 'px');
+        });
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    const logoImg = document.querySelector('.nav-logo img');
+    if (logoImg) {
+        logoImg.addEventListener('mouseenter', () => logoImg.src = 'images/logo-hover.gif?' + Date.now());
+        logoImg.addEventListener('mouseleave', () => logoImg.src = 'images/logo.png');
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; } }
+        else { if (!_rafId && _heroVisible) animate(); }
+    });
+
+    let _heroVisible = true;
+    const heroObserver = new IntersectionObserver(([entry]) => {
+        _heroVisible = entry.isIntersecting;
+        if (_heroVisible) { if (!_rafId) animate(); }
+        else              { if (_rafId)  { cancelAnimationFrame(_rafId); _rafId = null; } }
+    }, { threshold: 0 });
+    heroObserver.observe(heroWrap);
+
+    } // end _initThreeScene
+    _initThreeScene();
+</script>
+<script>
+class FlickeringGrid {
+    constructor(canvas, opts = {}) {
+        this.canvas = canvas;
+        this.ctx    = canvas.getContext('2d');
+        this.opts   = {
+            squareSize:    opts.squareSize    ?? 3,
+            gridGap:       opts.gridGap       ?? 5,
+            flickerChance: opts.flickerChance ?? 0.06,
+            color:         opts.color         ?? '#FF1139',
+            maxOpacity:    opts.maxOpacity    ?? 0.12,
+        };
+        this.dpr      = opts.dpr ?? 1;
+        this.squares  = null;
+        this.cols     = 0;
+        this.rows     = 0;
+        this.lastTime = 0;
+        this.animId   = null;
+        this.colorPrefix = this._parseColor(this.opts.color);
+        this._resize();
+    }
+    _parseColor(colorStr) {
+        const tmp = document.createElement('canvas');
+        tmp.width = tmp.height = 1;
+        const ctx = tmp.getContext('2d');
+        ctx.fillStyle = colorStr; ctx.fillRect(0, 0, 1, 1);
+        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+        return `rgba(${r},${g},${b},`;
+    }
+    _resize() {
+        const dpr = this.dpr;
+        const w = this.canvas.offsetWidth, h = this.canvas.offsetHeight;
+        this.canvas.width = w * dpr; this.canvas.height = h * dpr;
+        const { squareSize, gridGap, maxOpacity } = this.opts;
+        this.cols = Math.floor(w / (squareSize + gridGap));
+        this.rows = Math.floor(h / (squareSize + gridGap));
+        this.squares = new Float32Array(this.cols * this.rows);
+        for (let i = 0; i < this.squares.length; i++) this.squares[i] = Math.random() * maxOpacity;
+    }
+    _update(dt) {
+        const { flickerChance, maxOpacity } = this.opts;
+        for (let i = 0; i < this.squares.length; i++) {
+            if (Math.random() < flickerChance * dt) this.squares[i] = Math.random() * maxOpacity;
+        }
+    }
+    _draw() {
+        const ctx = this.ctx;
+        const { squareSize, gridGap } = this.opts;
+        const step = squareSize + gridGap;
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.save(); ctx.scale(this.dpr, this.dpr);
+        for (let i = 0; i < this.cols; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                const opacity = this.squares[i * this.rows + j];
+                if (opacity < 0.005) continue;
+                ctx.fillStyle = `${this.colorPrefix}${opacity})`;
+                ctx.fillRect(i * step, j * step, squareSize, squareSize);
+            }
+        }
+        ctx.restore();
+    }
+    _frame(time) {
+        this.animId = requestAnimationFrame(t => this._frame(t));
+        const dt = Math.min((time - this.lastTime) / 1000, 0.1);
+        if (dt < 1 / 31) return;
+        this.lastTime = time;
+        this._update(dt); this._draw();
+    }
+    start()  { this.lastTime = performance.now(); this.animId = requestAnimationFrame(t => this._frame(t)); }
+    stop()   { if (this.animId) cancelAnimationFrame(this.animId); this.animId = null; }
+    resize() { this._resize(); }
+}
+
+(function () {
+    const gridCanvas = document.getElementById('hero-grid-canvas');
+    if (!gridCanvas) return;
+    gridCanvas.style.width  = window.innerWidth  + 'px';
+    gridCanvas.style.height = window.innerHeight + 'px';
+    const heroGrid = new FlickeringGrid(gridCanvas, {
+        squareSize: 3, gridGap: 5, flickerChance: 0.03,
+        color: '#FF1139', maxOpacity: 0.10, dpr: 1,
+    });
+    heroGrid.start();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            gridCanvas.style.width  = window.innerWidth  + 'px';
+            gridCanvas.style.height = window.innerHeight + 'px';
+            heroGrid.resize();
+        }, 100);
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) heroGrid.stop(); else heroGrid.start();
+    });
+})();
+</script>
+</body>
+</html>
